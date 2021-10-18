@@ -253,6 +253,7 @@ body {
     border-radius: 4px;
     z-index: -1;
 }
+
 .button:disabled {
     background-color: #cd0e03;
 }
@@ -295,15 +296,14 @@ body {
     font-family: "Mortal Kombat 3";
 }
 
-.drawTitle {
+.reloadWrap {
     position: absolute;
-    text-align: center;
-    top: 25%;
-    left: 50%;
-    font-size: 36px;
-    transform: translate(-50%, 0%);
-    text-transform: uppercase;
+    top: 10%;
     z-index: 1000;
-    color: rgb(2, 204, 255);
-    font-family: "Mortal Kombat 3";
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.reloadWrap .button {
+    margin-top: 0;
 }
