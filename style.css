@@ -271,6 +271,7 @@ body {
 
 .loseTitle {
     position: absolute;
+    text-align: center;
     top: 25%;
     left: 50%;
     font-size: 36px;
@@ -283,6 +284,7 @@ body {
 
 .winTitle {
     position: absolute;
+    text-align: center;
     top: 25%;
     left: 50%;
     font-size: 36px;
@@ -290,5 +292,18 @@ body {
     text-transform: uppercase;
     z-index: 1000;
     color: rgb(255, 217, 2);
+    font-family: "Mortal Kombat 3";
+}
+
+.drawTitle {
+    position: absolute;
+    text-align: center;
+    top: 25%;
+    left: 50%;
+    font-size: 36px;
+    transform: translate(-50%, 0%);
+    text-transform: uppercase;
+    z-index: 1000;
+    color: rgb(2, 204, 255);
     font-family: "Mortal Kombat 3";
 }

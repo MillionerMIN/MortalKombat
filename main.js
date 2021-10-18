@@ -55,8 +55,10 @@ const createPlayer = (playerObj) => {
 const changeHP = (player) => {
   const $playerHp = document.querySelector('.player' + player.player + ' .life');
   player.hp -= randomHP();
+  if (player.hp < 0) {
+    player.hp = 0;
+  }
   $playerHp.style.width = player.hp + '%';
-  return player.hp
 }
 
 const playerLose = (name) => {
@@ -67,7 +69,11 @@ const playerLose = (name) => {
 
 const playerWin = (name) => {
   const $winTitle = createElement('div', 'winTitle');
-  $winTitle.innerHTML = name + ' win';
+  if(name) {
+    $winTitle.innerHTML = name + ' win';
+  } else {
+    $winTitle.innerHTML = 'Draw - strongest will win';
+  }
   return $winTitle;
 }
 
@@ -76,12 +82,18 @@ const randomHP = () => {
 }
 
 $randomButton.addEventListener('click', () => {
-  if (changeHP(player1) <= 0) {
+  changeHP(player2);
+  changeHP(player1);
+
+  if (player1.hp === 0 || player2.hp === 0) {
+    $randomButton.disabled = true;
+  } 
+  if (player1.hp === 0 && player1.hp < player2.hp) {
     $arenas.appendChild(playerWin(player2.name))
-    $randomButton.disabled = true
-  } else if (changeHP(player2)<= 0) {
-    $arenas.appendChild(playerWin(player1.name))
-    $randomButton.disabled = true
+  } else if (player2.hp === 0 && player1.hp > player2.hp) {
+    $arenas.appendChild(playerWin(player1.name)) 
+  } else if (player1.hp === 0 && player2.hp === 0) {
+    $arenas.appendChild(playerWin());
   }
 })
 
