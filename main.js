@@ -1,5 +1,13 @@
 const $arenas = document.querySelector('.arenas');
 const $randomButton = document.querySelector('.button');
+const $formFight = document.querySelector('.control');
+
+const HIT = {
+  head: 30,
+  body: 25,
+  foot: 20,
+};
+const ATTACK = ['head', 'body', 'foot'];
 
 const player1 = {
   player: 1,
@@ -7,12 +15,10 @@ const player1 = {
   hp: 100,
   img: 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif',
   weapon: ['sword'],
-  attack: function () {
-    console.log(`${this.name}` + ' Fight...');
-  },
-  changHP: changeHP,
-  elHP: elHP,
-  renderHP: renderHP,
+  attack,
+  changeHP,
+  elHP,
+  renderHP,
 };
 
 const player2 = {
@@ -21,12 +27,10 @@ const player2 = {
   hp: 100,
   img: 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif',
   weapon: ['hands'],
-  attack: function () {
-    console.log(`${this.name}` + ' Fight...');
-  },
-  changHP: changeHP,
-  elHP: elHP,
-  renderHP: renderHP,
+  attack,
+  changeHP,
+  elHP,
+  renderHP,
 };
 
 const createElement = (tag, className) => {
@@ -44,8 +48,8 @@ function createReloadButton() {
   $reloadWrap.appendChild($reloadButton);
   $reloadButton.addEventListener('click', () => {
     window.location.reload();
-  })
-  return $reloadWrap
+  });
+  return $reloadWrap;
 }
 
 const createPlayer = (playerObj) => {
@@ -99,13 +103,59 @@ function randomNum(number) {
   return Math.floor(Math.random() * (number - 1) + 1);
 }
 
-$randomButton.addEventListener('click', () => {
-  player1.changHP(randomNum(20));
-  player2.changHP(randomNum(20));
-  player1.elHP();
-  player2.elHP();
-  player1.renderHP();
-  player2.renderHP();
+$arenas.appendChild(createPlayer(player1));
+$arenas.appendChild(createPlayer(player2));
+
+function enemyAttack() {
+  const hit = ATTACK[randomNum(3) - 1];
+  const defence = ATTACK[randomNum(3) - 1];
+
+  return {
+    value: randomNum(HIT[hit]),
+    hit,
+    defence,
+  };
+}
+
+// не уверен в правильности этой функции, но както работает
+function attack(attack, defence) {
+  if (attack.hit !== defence.defence) {
+    this.changeHP(attack.value);
+    this.renderHP();
+    // console.log(`####: ${this.player}`, this.hp);
+  }
+}
+
+$formFight.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const enemy = enemyAttack();
+  const attack = {};
+
+  for (let item of $formFight) {
+    if (item.checked && item.name === 'hit') {
+      attack.value = randomNum(HIT[item.value]);
+      attack.hit = item.value;
+    }
+    if (item.checked && item.name === 'defence') {
+      attack.defence = item.value;
+    }
+    item.checked = false;
+  }
+  // console.log('### enemy:', enemy.value);
+  // console.log('### attack:', attack.value);
+
+  player1.attack(enemy, attack);
+  player2.attack(attack, enemy);
+
+  // if (attack.hit !== enemy.defence) {
+  //   player2.changeHP(attack.value);
+  //   player2.renderHP();
+  // }
+  // if (enemy.hit !== attack.defence) {
+  //   player1.changeHP(enemy.value);
+  //   player1.renderHP();
+  // }
 
   if (player1.hp === 0 || player2.hp === 0) {
     $randomButton.disabled = true;
@@ -119,6 +169,3 @@ $randomButton.addEventListener('click', () => {
     $arenas.appendChild(playerWin());
   }
 });
-
-$arenas.appendChild(createPlayer(player1));
-$arenas.appendChild(createPlayer(player2));
