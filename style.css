@@ -170,12 +170,16 @@ body {
 }
 
 .chat {
-    width: 786px;
+    width: 814px;
     height: 30vh;
     background-image: url(./assets/versus.png);
     background-size: cover;
     background-position: center;
     border-top: 4px solid #f5d100;
+    padding: 6px 40px 6px 60px;
+    overflow: scroll;
+    color: white;
+    font-family: Arial
 }
 
 .character {
@@ -276,19 +280,6 @@ body {
 .button:disabled:active::after {
     top: 4px;
 }
-
-/* .loseTitle {
-    position: absolute;
-    top: 22%;
-    left: 50%;
-    font-size: 36px;
-    transform: translate(-50%, 0%);
-    text-transform: uppercase;
-    z-index: 1000;
-    color: white;
-    font-family: "Mortal Kombat 3";
-    text-shadow: 2px 2px 2px #cd0e03;
-} */
 
 .winTitle {
     position: absolute;
