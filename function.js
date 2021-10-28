@@ -1,5 +1,5 @@
 import { logs } from './logs.js';
-import { $chat, $formFight, $arenas } from './main.js'
+import { $chat, $formFight, $arenas } from './game.js'
 import { player1, player2 } from "./person.js";
 
 const $randomButton = document.querySelector('.button');
@@ -20,7 +20,7 @@ export const createElement = (tag, className) => {
   return $tag;
 };
 
-export function createReloadButton() {
+export const createReloadButton = () => {
   const $reloadWrap = createElement('div', 'reloadWrap');
   const $reloadButton = createElement('button', 'button');
   $reloadButton.innerHTML = 'Restart';
