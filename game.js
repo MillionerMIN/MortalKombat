@@ -1,3 +1,4 @@
+import { getPlayers } from './api.js';
 import { logs } from './logs.js';
 import { Player } from './person.js';
 
@@ -6,8 +7,11 @@ const HIT = {
   body: 25,
   foot: 20,
 };
-
 const ATTACK = ['head', 'body', 'foot'];
+
+const Arenas = ['arena1', 'arena2', 'arena3', 'arena4', 'arena5']
+
+
 
 export class Game {
   constructor() {
@@ -53,7 +57,7 @@ export class Game {
     $reloadButton.innerHTML = 'Restart';
     $reloadWrap.appendChild($reloadButton);
     $reloadButton.addEventListener('click', () => {
-      window.location.reload();
+      window.location.pathname = 'index.html';
     });
     return $reloadWrap;
   }
@@ -147,22 +151,31 @@ export class Game {
     return $winTitle;
   };
 
-  start = () => {
+  start = async () => {
+
+    //Рандомные отображение арены
+    this.$arenas.classList.add(Arenas[this.randomNum(Arenas.length) - 1]);
+
+    const players = await getPlayers();
+    const p1 = JSON.parse(localStorage.getItem('player1'))
+    const p2 = players[this.randomNum(players.length) - 1]
 
     const player1 = new Player({
+      ...p1,
       player: 1,
-      name: 'SONYA',
-      hp: 100,
-      img: 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif',
-      weapon: ['sword'],
-    });
+      rootSelector: 'arenas'
+    })
+    console.log(player1);
     const player2 = new Player({
+      ...p2,
       player: 2,
-      name: 'LIU KANG',
-      hp: 100,
-      img: 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif',
-      weapon: ['hands'],
+      rootSelector: 'arenas',
     });
+
+    console.log(player2);
+
+
+
     this.logs = logs;
 
     this.$formFight.addEventListener('submit', (e) => {

@@ -19,19 +19,3 @@ export class Player {
     this.elHP().style.width = this.hp + '%';
   }
 }
-
-// export const player1 = new Player({
-//   player: 1,
-//   name: 'SONYA',
-//   hp: 100,
-//   img: 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif',
-//   weapon: ['sword'],
-// });
-
-// export const player2 = new Player({
-//   player: 2,
-//   name: 'LIU KANG',
-//   hp: 100,
-//   img: 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif',
-//   weapon: ['hands'],
-// });
