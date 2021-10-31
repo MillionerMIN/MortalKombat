@@ -63,7 +63,7 @@ async function init() {
       el.classList.add('active');
 
       setTimeout(() => {
-        window.location.pathname = 'arenas.html'
+        window.location.pathname = `${process.env.PUBLIC_URL + 'arenas.html'}`
         // TODO: Здесь должен быть код который перенаправит вас на ваше игровое поле...
         //  Пример использования: window.location.pathname = 'arenas.html';
       }, 1000);

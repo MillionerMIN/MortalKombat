@@ -11,8 +11,6 @@ const ATTACK = ['head', 'body', 'foot'];
 
 const Arenas = ['arena1', 'arena2', 'arena3', 'arena4', 'arena5']
 
-
-
 export class Game {
   constructor() {
     this.$arenas = document.querySelector('.arenas');
@@ -57,7 +55,7 @@ export class Game {
     $reloadButton.innerHTML = 'Restart';
     $reloadWrap.appendChild($reloadButton);
     $reloadButton.addEventListener('click', () => {
-      window.location.pathname = 'index.html';
+      window.location.pathname = `${process.env.PUBLIC_URL + 'index.html'}`;
     });
     return $reloadWrap;
   }
