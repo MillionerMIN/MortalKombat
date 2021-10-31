@@ -10,26 +10,11 @@ const HIT = {
 const ATTACK = ['head', 'body', 'foot'];
 
 export class Game {
-  constructor(props) {
+  constructor() {
     this.$arenas = document.querySelector('.arenas');
     this.$chat = document.querySelector('.chat');
     this.$formFight = document.querySelector('.control');
     this.$randomButton = document.querySelector('.button');
-    this.player1 = new Player({
-      player: 1,
-      name: 'SONYA',
-      hp: 100,
-      img: 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif',
-      weapon: ['sword'],
-    });
-    this.player2 = new Player({
-      player: 2,
-      name: 'LIU KANG',
-      hp: 100,
-      img: 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif',
-      weapon: ['hands'],
-    });
-    this.logs = logs;
   }
 
   createElement = (tag, className) => {
@@ -133,19 +118,19 @@ export class Game {
     this.$chat.insertAdjacentHTML('afterbegin', whereLook(type));
   }
 
-  comparisonResult = () => {
-    const { name, hp } = this.player1;
-    const { name: name2, hp: hp2 } = this.player2;
+  comparisonResult = (player1, player2) => {
+    const { name, hp } = player1;
+    const { name: name2, hp: hp2 } = player2;
     if (hp === 0 || hp2 === 0) {
       this.$randomButton.disabled = true;
       this.$arenas.appendChild(this.createReloadButton());
     }
     if (hp === 0 && hp < hp2) {
       this.$arenas.appendChild(this.playerWin(name2));
-      this.generateLog('end', this.player2, this.player1);
+      this.generateLog('end', player2, player1);
     } else if (hp2 === 0 && hp > hp2) {
       this.$arenas.appendChild(this.playerWin(name));
-      this.generateLog('end', this.player1, this.player2);
+      this.generateLog('end', player1, player2);
     } else if (hp === 0 && hp2 === 0) {
       this.$arenas.appendChild(this.playerWin());
       this.generateLog('draw');
@@ -163,34 +148,51 @@ export class Game {
   };
 
   start = () => {
+
+    const player1 = new Player({
+      player: 1,
+      name: 'SONYA',
+      hp: 100,
+      img: 'http://reactmarathon-api.herokuapp.com/assets/sonya.gif',
+      weapon: ['sword'],
+    });
+    const player2 = new Player({
+      player: 2,
+      name: 'LIU KANG',
+      hp: 100,
+      img: 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif',
+      weapon: ['hands'],
+    });
+    this.logs = logs;
+
     this.$formFight.addEventListener('submit', (e) => {
       e.preventDefault();
       const enemy = this.enemyAttack();
       const player = this.playerAttack();
 
       if (player.hit !== enemy.defence) {
-        this.player1.changeHP(player.value);
-        this.generateLog('hit', this.player1, this.player2);
-        this.player1.renderHP();
+        player1.changeHP(player.value);
+        this.generateLog('hit', player1, player2);
+        player1.renderHP();
       }
       if (enemy.hit !== player.defence) {
-        this.player2.changeHP(enemy.value);
-        this.generateLog('hit', this.player2, this.player1);
-        this.player2.renderHP();
+        player2.changeHP(enemy.value);
+        this.generateLog('hit', player2, player1);
+        player2.renderHP();
       }
       if (player.hit === enemy.defence) {
-        this.generateLog('defence', this.player2, this.player1)
+        this.generateLog('defence', player2, player1)
       }
       if (enemy.hit === player.defence) {
-        this.generateLog('defence', this.player1, this.player2)
+        this.generateLog('defence', player1, player2)
       }
 
-      this.comparisonResult();
+      this.comparisonResult(player1, player2);
     });
 
-    this.$arenas.appendChild(this.createPlayer(this.player1));
-    this.$arenas.appendChild(this.createPlayer(this.player2));
+    this.$arenas.appendChild(this.createPlayer(player1));
+    this.$arenas.appendChild(this.createPlayer(player2));
 
-    this.generateLog('start', this.player1, this.player2);
+    this.generateLog('start', player1, player2);
   }
 };
