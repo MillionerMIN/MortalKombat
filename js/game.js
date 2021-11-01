@@ -55,7 +55,7 @@ export class Game {
     $reloadButton.innerHTML = 'Restart';
     $reloadWrap.appendChild($reloadButton);
     $reloadButton.addEventListener('click', () => {
-      window.location.pathname = `${process.env.PUBLIC_URL + 'index.html'}`;
+      window.location.href = 'index.html';
     });
     return $reloadWrap;
   }
