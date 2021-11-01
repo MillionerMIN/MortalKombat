@@ -153,6 +153,7 @@ export class Game {
 
     //Рандомные отображение арены
     this.$arenas.classList.add(Arenas[this.randomNum(Arenas.length) - 1]);
+    console.log(Arenas[this.randomNum(Arenas.length) - 1]);
 
     const players = await getPlayers();
     const p1 = JSON.parse(localStorage.getItem('player1'))
